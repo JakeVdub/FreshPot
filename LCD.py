@@ -22,12 +22,13 @@ import RPi.GPIO as GPIO
 import time
  
 # Define GPIO to LCD mapping
-LCD_RS = 7
-LCD_E  = 8
+LCD_RS = 27
+LCD_E  = 22
 LCD_D4 = 25
 LCD_D5 = 24
 LCD_D6 = 23
-LCD_D7 = 18
+LCD_D7 = 13
+LCD_BACKLIGHT = 4
  
 # Define some device constants
 LCD_WIDTH = 16    # Maximum characters per line
@@ -51,35 +52,36 @@ def main():
   GPIO.setup(LCD_D5, GPIO.OUT) # DB5
   GPIO.setup(LCD_D6, GPIO.OUT) # DB6
   GPIO.setup(LCD_D7, GPIO.OUT) # DB7
+  GPIO.setup(LCD_BACKLIGHT, GPIO.OUT) # Backlight
  
   # Initialise display
   lcd_init()
  
   while True:
+    cmd = "ip addr show scope global wlan0 | grep inet | cut -d' ' -f6 | cut -d/ -f1"
+    output = ""
+    ## This loop keeps attempting to find the IP, if after one minute it does not work
+    ## then it returns an error output so the screen can display the error message
+    while (retry < 30) and (output == ""):
+      time.sleep(1)
+      p = Popen(cmd, shell=True, stdout=PIPE)
+      output = p.communicate()[0] 
+      if output == "":  
+        time.sleep(2)
+        retry = retry + 1
+    if retry > 30:
+      output == "DISCONNECTED"
+      time.sleep(10)
+      retry = 0
+    return output
  
-    # Send some test
-    lcd_string("Rasbperry Pi",LCD_LINE_1)
-    lcd_string("16x2 LCD Test",LCD_LINE_2)
- 
+    ## Send The IP Address
+    if output == "DISCONNECTED":
+      lcd_string(output,LCD_LINE_1)
+    else:
+      lcd_string("CONNECTED",LCD_LINE_1)
+      lcd_string(output,LCD_LINE_2)
     time.sleep(3) # 3 second delay
- 
-    # Send some text
-    lcd_string("1234567890123456",LCD_LINE_1)
-    lcd_string("abcdefghijklmnop",LCD_LINE_2)
- 
-    time.sleep(3) # 3 second delay
- 
-    # Send some text
-    lcd_string("RaspberryPi-spy",LCD_LINE_1)
-    lcd_string(".co.uk",LCD_LINE_2)
- 
-    time.sleep(3)
- 
-    # Send some text
-    lcd_string("Follow me on",LCD_LINE_1)
-    lcd_string("Twitter @RPiSpy",LCD_LINE_2)
- 
-    time.sleep(3)
  
 def lcd_init():
   # Initialise display
