@@ -20,6 +20,10 @@
 #import
 import RPi.GPIO as GPIO
 import time
+from subprocess import *
+from time import sleep, strftime
+from datetime import datetime
+
  
 # Define GPIO to LCD mapping
 LCD_RS = 27
