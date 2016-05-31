@@ -84,10 +84,10 @@ def main():
  
     ## Send The IP Address
     if output == "DISCONNECTED":
-      lcd_string(output,LCD_LINE_1)
+      lcd_string('output',LCD_LINE_1)
     else:
       lcd_string("CONNECTED",LCD_LINE_1)
-      lcd_string(output,LCD_LINE_2)
+      lcd_string('output',LCD_LINE_2)
     time.sleep(3) # 3 second delay
     
   except KeyboardInterrupt:
