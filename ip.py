@@ -29,7 +29,7 @@ class App():
   ## Setup retry for counting system
   retry = 0
   
-  self.run()
+  run()
   
   ## Main thread of program, while loop is to get it to check for connectivity again
   ## Given an error
