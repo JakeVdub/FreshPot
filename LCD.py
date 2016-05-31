@@ -60,6 +60,7 @@ def main():
   while True:
     cmd = "ip addr show scope global wlan0 | grep inet | cut -d' ' -f6 | cut -d/ -f1"
     output = ""
+    retry = 0
     ## This loop keeps attempting to find the IP, if after one minute it does not work
     ## then it returns an error output so the screen can display the error message
     while (retry < 30) and (output == ""):
