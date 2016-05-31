@@ -61,7 +61,9 @@ def main():
   # Initialise display
   lcd_init()
  
-  while True:
+  try:
+    lcd_string("it is working",LCD_LINE_1)
+    time.sleep(3)
     cmd = "ip addr show scope global wlan0 | grep inet | cut -d' ' -f6 | cut -d/ -f1"
     output = ""
     retry = 0
