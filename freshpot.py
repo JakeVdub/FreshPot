@@ -7,6 +7,7 @@ import LCD
 
 
 GPIO.setmode(GPIO.BCM) ##Set numbering mode
+GPIO.setwarnings(False)
 
 TERMS = '#freshpot'  ##Search terms for Twitter stream
 
