@@ -28,20 +28,24 @@ class App():
                              lcd_columns, lcd_rows, lcd_backlight)
   ## Setup retry for counting system
   retry = 0
+  
+  self.run()
+  
   ## Main thread of program, while loop is to get it to check for connectivity again
   ## Given an error
   
-  while (1):
-    ipaddr = get_ip_addr()
-    msg = ipaddr
+  def run(self):
+    while (1):
+      ipaddr = self.get_ip_addr()
+      msg = ipaddr
     
-    if msg == "error":
-      msg = "DISCONNECTED"
-      retry = 0
+      if msg == "error":
+        msg = "DISCONNECTED"
+        retry = 0
     
-    self.lcd.clear()  
-    self.lcd.message(msg)
-    time.sleep(15)
+      self.lcd.clear()  
+      self.lcd.message(msg)
+      time.sleep(15)
       
     
   ## Thread to actually get IP address of wifi network, returns "output"
