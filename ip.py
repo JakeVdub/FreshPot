@@ -34,20 +34,20 @@ retry = 0
 ## Given an error
   
 while (1):
-  ipaddr = self.get_ip_addr()
+  ipaddr = get_ip_addr()
   msg = ipaddr
     
   if msg == "error":
     msg = "DISCONNECTED"
     retry = 0
     
-  self.lcd.clear()  
-  self.lcd.message(msg)
+  lcd.clear()  
+  lcd.message(msg)
   time.sleep(15)
       
     
 ## Thread to actually get IP address of wifi network, returns "output"
-def get_ip_addr(self):
+get_ip_addr()
   cmd = "ip addr show scope global wlan0 | grep inet | cut -d' ' -f6 | cut -d/ -f1"
   output = ""
   ## This loop keeps attempting to find the IP, if after one minute it does not work
