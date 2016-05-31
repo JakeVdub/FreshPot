@@ -8,9 +8,8 @@ from subprocess import *
 from time import sleep, strftime
 from datetime import datetime
 
-
 # Raspberry Pi pin configuration:
-lcd_rs        = 27  # Note this might need to be changed to 21 for older revision Pi's.
+lcd_rs        = 27 
 lcd_en        = 22
 lcd_d4        = 25
 lcd_d5        = 24
@@ -26,25 +25,29 @@ lcd_rows    = 2
 lcd = LCD.Adafruit_CharLCD(lcd_rs, lcd_en, lcd_d4, lcd_d5, lcd_d6, lcd_d7,
                            lcd_columns, lcd_rows, lcd_backlight)
 
-# Print a two line message
-lcd.message('Hello\nworld!')
-
-# Wait 5 seconds
-time.sleep(5.0)
-
-######## Got this from an example ##################
-
-cmd = "ip addr show eth0 | grep inet | awk '{print $2}' | cut -d/ -f1"
+retry = 0 ##Sets counter for displaying error message
+output = ""
+cmd = "ip addr show scope global wlan0 | grep inet | cut -d' ' -f6 | cut -d/ -f1"
 
 def run_cmd(cmd):
         p = Popen(cmd, shell=True, stdout=PIPE)
         output = p.communicate()[0]
         return output
 
-while 1:
-        lcd.clear()
-        ipaddr = run_cmd(cmd)
-        lcd.message(datetime.now().strftime('%b %d  %H:%M:%S\n'))
-        lcd.message('IP %s' % ( ipaddr ) )
-        sleep(2)
+while (retry < 30):
+  lcd.clear()
+  time.sleep(1)
+  p = Popen(cmd, shell=True, stdout=PIPE)
+  output = p.communicate()[0]
+  ipaddr = output
+  if output == "":  
+    lcd.message("DISCONNECTED")
+    retry = retry + 1
+  else:
+    lcd.message("CONNECTED" / 'IP %s' % ( ipaddr ) )
+    sleep(15)
 
+if (retry > 30):
+  lcd.message("ERROR")
+  time.sleep(15)
+  retry = 0
