@@ -8,61 +8,51 @@ from subprocess import *
 from time import sleep, strftime
 from datetime import datetime
 
+class Get_IP():
 
+  ## Raspberry Pi pin configuration:
+  lcd_rs        = 27 
+  lcd_en        = 22
+  lcd_d4        = 25
+  lcd_d5        = 24
+  lcd_d6        = 23
+  lcd_d7        = 13
+  lcd_backlight = 4
 
-## Raspberry Pi pin configuration:
-lcd_rs        = 27 
-lcd_en        = 22
-lcd_d4        = 25
-lcd_d5        = 24
-lcd_d6        = 23
-lcd_d7        = 13
-lcd_backlight = 4
+  ## Define LCD column and row size for 16x2 LCD.
+  lcd_columns = 16
+  lcd_rows    = 2
 
-## Define LCD column and row size for 16x2 LCD.
-lcd_columns = 16
-lcd_rows    = 2
-
-## Initialize the LCD using the pins above.
-lcd = LCD.Adafruit_CharLCD(lcd_rs, lcd_en, lcd_d4, lcd_d5, lcd_d6, lcd_d7,
+  ## Initialize the LCD using the pins above.
+  lcd = LCD.Adafruit_CharLCD(lcd_rs, lcd_en, lcd_d4, lcd_d5, lcd_d6, lcd_d7,
                            lcd_columns, lcd_rows, lcd_backlight)
-## Setup retry for counting system
-retry = 0
+  ## Setup retry for counting system
   
   
-## Main thread of program, while loop is to get it to check for connectivity again
-## Given an error
   
-while (1):
-  ipaddr = get_ip_addr()
-  msg = ipaddr
-    
-  if msg == "error":
-    msg = "DISCONNECTED"
-    retry = 0
-    
-  lcd.clear()  
-  lcd.message(msg)
-  time.sleep(15)
+  
+  
       
     
-## Thread to actually get IP address of wifi network, returns "output"
-get_ip_addr()
-  cmd = "ip addr show scope global wlan0 | grep inet | cut -d' ' -f6 | cut -d/ -f1"
-  output = ""
-  ## This loop keeps attempting to find the IP, if after one minute it does not work
-  ## then it returns an error output so the screen can display the error message
-  while (retry < 30) and (output == ""):
-    p = Popen(cmd, shell=True, stdout=PIPE)
-    output = p.communicate()[0] 
+  ## Thread to actually get IP address of wifi network, returns "output"
+  def get_ip_addr(self)
     
-    if output == "":  
-      time.sleep(3)
-      retry = retry + 1
+    cmd = "ip addr show scope global wlan0 | grep inet | cut -d' ' -f6 | cut -d/ -f1"
+    output = ""
+    
+    ## This loop keeps attempting to find the IP, if after one minute it does not work
+    ## then it returns an error output so the screen can display the error message
+    while (retry < 30) and (output == ""):
+      p = Popen(cmd, shell=True, stdout=PIPE)
+      output = p.communicate()[0] 
+    
+      if output == "":  
+        time.sleep(3)
+        retry = retry + 1
   
-  if retry > 30:
-    output == "error"
+    if retry > 30:
+      output == "error"
     
-  return output
+    return output
   
   
