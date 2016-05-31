@@ -1,15 +1,16 @@
 #!/usr/bin/python
 # Example using a character LCD connected to a Raspberry Pi 
-class Ipaddr():
-  
-  import time
-  import Adafruit_CharLCD as LCD
-  from Adafruit_CharLCD import Adafruit_CharLCD
-  from subprocess import *
-  from time import sleep, strftime
-  from datetime import datetime
 
-  # Raspberry Pi pin configuration:
+import time
+import Adafruit_CharLCD as LCD
+from Adafruit_CharLCD import Adafruit_CharLCD
+from subprocess import *
+from time import sleep, strftime
+from datetime import datetime
+
+class App():
+
+  ## Raspberry Pi pin configuration:
   lcd_rs        = 27 
   lcd_en        = 22
   lcd_d4        = 25
@@ -18,17 +19,17 @@ class Ipaddr():
   lcd_d7        = 13
   lcd_backlight = 4
 
-  # Define LCD column and row size for 16x2 LCD.
+  ## Define LCD column and row size for 16x2 LCD.
   lcd_columns = 16
   lcd_rows    = 2
 
-  # Initialize the LCD using the pins above.
+  ## Initialize the LCD using the pins above.
   lcd = LCD.Adafruit_CharLCD(lcd_rs, lcd_en, lcd_d4, lcd_d5, lcd_d6, lcd_d7,
                              lcd_columns, lcd_rows, lcd_backlight)
-
-
+  ## Setup retry for counting system
   retry = 0
-
+  ## Main thread of program, while loop is to get it to check for connectivity again
+  ## Given an error
   def run(self):
     while (1):
       ipaddr = self.get_ip_addr()
@@ -43,7 +44,7 @@ class Ipaddr():
       time.sleep(15)
       
     
-
+  ## Thread to actually get IP address of wifi network, returns "output"
   def get_ip_addr(self):
     cmd = "ip addr show scope global wlan0 | grep inet | cut -d' ' -f6 | cut -d/ -f1"
     output = ""
