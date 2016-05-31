@@ -60,8 +60,9 @@ def main():
  
   # Initialise display
   lcd_init()
+  Get_IP()
  
-  try:
+  def Get_IP():
     lcd_string("it is working!",LCD_LINE_1)
     time.sleep(3)
     cmd = "ip addr show scope global wlan0 | grep inet | cut -d' ' -f6 | cut -d/ -f1"
@@ -90,8 +91,7 @@ def main():
       lcd_string('output',LCD_LINE_2)
     time.sleep(3) # 3 second delay
     
-  except KeyboardInterrupt:
-    pass
+  
  
 def lcd_init():
   # Initialise display
