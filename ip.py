@@ -31,7 +31,7 @@ class Ipaddr():
 
   def run(self):
     while (1):
-     ipaddr = self.get_ip_addr()
+      ipaddr = self.get_ip_addr()
       msg = ipaddr
     
       if msg == "error":
@@ -49,7 +49,7 @@ class Ipaddr():
     output = ""
     ## This loop keeps attempting to find the IP, if after one minute it does not work
     ## then it returns an error output so the screen can display the error message
-    while (retry < 30) and (output = ""):
+    while (retry < 30) and (output == ""):
       p = Popen(cmd, shell=True, stdout=PIPE)
       output = p.communicate()[0] 
     
