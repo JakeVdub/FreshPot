@@ -86,7 +86,7 @@ def Get_IP():
   print ("6: " + OUTPUT)
   if OUTPUT == "DISCONNECTED":
     lcd_string(OUTPUT,LCD_LINE_1)
-  else if OUTPUT == "192.168.2.5":
+  if OUTPUT == "192.168.2.5":
     lcd_string("CONNECTED",LCD_LINE_1)
     lcd_string("192.168.2.5",LCD_LINE_2)
   else:
