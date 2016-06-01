@@ -62,34 +62,34 @@ def main():
   lcd_init()
   Get_IP()
  
-  def Get_IP():
-    lcd_string("it is working!",LCD_LINE_1)
-    time.sleep(3)
-    cmd = "ip addr show scope global wlan0 | grep inet | cut -d' ' -f6 | cut -d/ -f1"
-    output = ""
+def Get_IP():
+  lcd_string("it is working!",LCD_LINE_1)
+  time.sleep(3)
+  cmd = "ip addr show scope global wlan0 | grep inet | cut -d' ' -f6 | cut -d/ -f1"
+  output = ""
+  retry = 0
+  ## This loop keeps attempting to find the IP, if after one minute it does not work
+  ## then it returns an error output so the screen can display the error message
+  while (retry < 30) and (output == ""):
+    time.sleep(1)
+    p = Popen(cmd, shell=True, stdout=PIPE)
+    output = p.communicate()[0] 
+    if output == "":  
+      time.sleep(2)
+      retry = retry + 1
+  if retry > 30:
+    output == "DISCONNECTED"
+    time.sleep(10)
     retry = 0
-    ## This loop keeps attempting to find the IP, if after one minute it does not work
-    ## then it returns an error output so the screen can display the error message
-    while (retry < 30) and (output == ""):
-      time.sleep(1)
-      p = Popen(cmd, shell=True, stdout=PIPE)
-      output = p.communicate()[0] 
-      if output == "":  
-        time.sleep(2)
-        retry = retry + 1
-    if retry > 30:
-      output == "DISCONNECTED"
-      time.sleep(10)
-      retry = 0
-    return output
+  return output
  
-    ## Send The IP Address
-    if output == "DISCONNECTED":
-      lcd_string('output',LCD_LINE_1)
-    else:
-      lcd_string("CONNECTED",LCD_LINE_1)
-      lcd_string('output',LCD_LINE_2)
-    time.sleep(3) # 3 second delay
+  ## Send The IP Address
+  if output == "DISCONNECTED":
+    lcd_string('output',LCD_LINE_1)
+  else:
+    lcd_string("CONNECTED",LCD_LINE_1)
+    lcd_string('output',LCD_LINE_2)
+  time.sleep(3) # 3 second delay
     
   
  
