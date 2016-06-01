@@ -81,11 +81,12 @@ def Get_IP():
     if output == "":  
       time.sleep(2)
       retry = retry + 1
+    return output
   if retry > 30:
     output == "DISCONNECTED"
     time.sleep(10)
     retry = 0
-  return output
+  
   print ("5" + output)
   OUTPUT = str(output)
  
