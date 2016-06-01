@@ -70,28 +70,20 @@ def Get_IP():
   output = ""
   retry = 0
   print ("2" + output)
-  ## This loop keeps attempting to find the IP, if after one minute it does not work
-  ## then it returns an error output so the screen can display the error message
-  while (retry < 30) and (output == ""):
-    print("3" + output)
-    time.sleep(1)
-    p = Popen(cmd, shell=True, stdout=PIPE)
-    output = p.communicate()[0] 
-    print ("4" + output)
-    if output == "":  
-      time.sleep(2)
-      retry = retry + 1
-    return output
-  if retry > 30:
-    output == "DISCONNECTED"
-    time.sleep(10)
-    retry = 0
+  print("3" + output)
+  p = Popen(cmd, shell=True, stdout=PIPE)
+  output = p.communicate()[0] 
+  print ("4: " + output)
+  if output == "":  
+    output = DISCONNECTED
+  return output
+
   
-  print ("5" + output)
+  print ("5: " + output)
   OUTPUT = str(output)
  
   ## Send The IP Address
-  print ("6" + OUTPUT)
+  print ("6: " + OUTPUT)
   if OUTPUT == "DISCONNECTED":
     lcd_string(OUTPUT,LCD_LINE_1)
   else:
