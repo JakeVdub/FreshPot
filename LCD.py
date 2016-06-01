@@ -76,8 +76,7 @@ def Get_IP():
   print ("4: " + output)
   if output == "":  
     output = DISCONNECTED
-  else:
-    ## Do nothing
+  
 
   
   print ("5: " + output)
