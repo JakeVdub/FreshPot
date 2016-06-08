@@ -47,8 +47,8 @@ class FreshPotStreamer(TwythonStreamer):
 ## Create Streamer, calls class FreshPotStreamer, also calls LCD.main()
 try:
   LCD.main() ##Print IP on LCD
-  stream = FreshPotStreamer(APP_KEY, APP_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-  stream.statuses.filter(track=TERMS)
+  stream = FreshPotStreamer(APP_KEY, APP_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET) ## Sets up Twitter Monitor
+  stream.statuses.filter(track=TERMS) ## Tells it what keywords to search for
   
   
 except KeyboardInterrupt:
