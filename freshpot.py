@@ -19,22 +19,22 @@ ACCESS_TOKEN_SECRET = 'bOeIf4a5AxeSrejiBEScagE3mKNnAoZE8dYBP7uiLuEOW'
 
 power_pin = 18 ## SSR Input pin
 
-shutdown_light = 19 ##Pin for blue light ring
+##shutdown_light = 19 ##Pin for blue light ring
 shutdown_pin = 26 ##Pin for shutdown button
 
-refresh_light = 5 ##Pin for green light ring (refresh connection button)
+##refresh_light = 5 ##Pin for green light ring (refresh connection button)
 refresh_pin = 6 ##Pin for connection-refresh button
 
-blink_rate = 250 ##Controls speed the light rings flash
+##blink_rate = 250 ##Controls speed the light rings flash
 
 GPIO.setup(power_pin, GPIO.OUT) ## Sets SSR's pin up as an output
 GPIO.output(power_pin, False) ## SSR initially turned off
 
-GPIO.setup(shutdown_light, GPIO.OUT) ##Sets up blue light ring pin as an output (provides 3v3 power to light)
-GPIO.output(shutdown_light, True) ##Shutdown light ring is on
+##GPIO.setup(shutdown_light, GPIO.OUT) ##Sets up blue light ring pin as an output (provides 3v3 power to light)
+##GPIO.output(shutdown_light, True) ##Shutdown light ring is on
 
-GPIO.setup(refresh_light, GPIO.OUT) ##Sets up green light ring pin as an output (Provides 3v3 power to light)
-GPIO.output(refresh_light, True) ##Refresh light ring is on
+##GPIO.setup(refresh_light, GPIO.OUT) ##Sets up green light ring pin as an output (Provides 3v3 power to light)
+##GPIO.output(refresh_light, True) ##Refresh light ring is on
 
 GPIO.setup(shutdown_pin, GPIO.IN) ##Sets up shutdown_pin to accept input
 GPIO.setup(refresh_pin, GPIO.IN) ##Sets up refresh button pin to accept input
@@ -72,22 +72,6 @@ try:
 ##When refresh button (green) is pressed, call LCD.main() to refresh LCD and flash light ring
 if GPIO.input(refresh_pin): 
   LCD.main()
-  GPIO.output(refresh_light, False)
-  time.sleep(blink_rate)
-  GPIO.output(refresh_light, True)
-  time.sleep(blink_rate)
-  GPIO.output(refresh_light, False)
-  time.sleep(blink_rate)
-  GPIO.output(refresh_light, True)
-  time.sleep(blink_rate)
-  GPIO.output(refresh_light, False)
-  time.sleep(blink_rate)
-  GPIO.output(refresh_light, True)
-  time.sleep(blink_rate)
-  GPIO.output(refresh_light, False)
-  time.sleep(blink_rate)
-  GPIO.output(refresh_light, True)
-  time.sleep(blink_rate)
   
   
 ##When shutdown button is pushed for 5 seconds Print a message on LCD and then shutdown
