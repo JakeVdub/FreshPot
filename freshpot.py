@@ -86,7 +86,7 @@ if GPIO.input(shutdown_pin):
     lcd_string("PRESS LONGER")
   
   elif (pressed_time >= 5):
-    lcd_string("See Ya!")
+    lcd_string("See Ya!", LCD_LINE_1)
     time.sleep(3000)
     os.system("sudo poweroff")
   
