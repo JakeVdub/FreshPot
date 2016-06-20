@@ -4,6 +4,7 @@ import RPi.GPIO as GPIO
 from twython import TwythonStreamer
 from twython import Twython
 import LCD
+import os
 
 
 GPIO.setmode(GPIO.BCM) ##Set numbering mode
@@ -19,10 +20,10 @@ ACCESS_TOKEN_SECRET = 'bOeIf4a5AxeSrejiBEScagE3mKNnAoZE8dYBP7uiLuEOW'
 
 power_pin = 18 ## SSR Input pin
 
-##shutdown_light = 19 ##Pin for blue light ring
+shutdown_light = 19 ##Pin for blue light ring
 shutdown_pin = 26 ##Pin for shutdown button
 
-##refresh_light = 5 ##Pin for green light ring (refresh connection button)
+refresh_light = 5 ##Pin for green light ring (refresh connection button)
 refresh_pin = 6 ##Pin for connection-refresh button
 
 ##blink_rate = 250 ##Controls speed the light rings flash
@@ -30,11 +31,11 @@ refresh_pin = 6 ##Pin for connection-refresh button
 GPIO.setup(power_pin, GPIO.OUT) ## Sets SSR's pin up as an output
 GPIO.output(power_pin, False) ## SSR initially turned off
 
-##GPIO.setup(shutdown_light, GPIO.OUT) ##Sets up blue light ring pin as an output (provides 3v3 power to light)
-##GPIO.output(shutdown_light, True) ##Shutdown light ring is on
+GPIO.setup(shutdown_light, GPIO.OUT) ##Sets up blue light ring pin as an output (provides 3v3 power to light)
+GPIO.output(shutdown_light, True) ##Shutdown light ring is on
 
-##GPIO.setup(refresh_light, GPIO.OUT) ##Sets up green light ring pin as an output (Provides 3v3 power to light)
-##GPIO.output(refresh_light, True) ##Refresh light ring is on
+GPIO.setup(refresh_light, GPIO.OUT) ##Sets up green light ring pin as an output (Provides 3v3 power to light)
+GPIO.output(refresh_light, True) ##Refresh light ring is on
 
 GPIO.setup(shutdown_pin, GPIO.IN) ##Sets up shutdown_pin to accept input
 GPIO.setup(refresh_pin, GPIO.IN) ##Sets up refresh button pin to accept input
@@ -69,7 +70,7 @@ try:
   stream.statuses.filter(track=TERMS) ## Tells it what keywords to search for
   
   
-##When refresh button (green) is pressed, call LCD.main() to refresh LCD and flash light ring
+##When refresh button (green) is pressed, call LCD.main() to refresh LCD 
 if GPIO.input(refresh_pin): 
   LCD.main()
   
