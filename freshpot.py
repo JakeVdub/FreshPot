@@ -5,7 +5,7 @@ from twython import TwythonStreamer
 from twython import Twython
 import LCD
 import os
-import buttons
+
 
 
 GPIO.setmode(GPIO.BCM) ##Set numbering mode
@@ -21,12 +21,8 @@ ACCESS_TOKEN_SECRET = 'bOeIf4a5AxeSrejiBEScagE3mKNnAoZE8dYBP7uiLuEOW'
 
 power_pin = 18 ## SSR Input pin
 
-
-
 GPIO.setup(power_pin, GPIO.OUT) ## Sets SSR's pin up as an output
 GPIO.output(power_pin, False) ## SSR initially turned off
-
-
 
 ## Sets up Twython for tweeting
 app = Twython(APP_KEY, APP_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET) 
@@ -50,13 +46,13 @@ class FreshPotStreamer(TwythonStreamer):
 
 
 
+
 ## Create Streamer, calls class FreshPotStreamer, also calls LCD.main()
 try:
   LCD.main() ##Print IP on LCD
-  buttons.main() ##Initializes the buttons
   stream = FreshPotStreamer(APP_KEY, APP_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET) ## Sets up Twitter Monitor
   stream.statuses.filter(track=TERMS) ## Tells it what keywords to search for
-  
+
   
 except KeyboardInterrupt:
   GPIO.cleanup()

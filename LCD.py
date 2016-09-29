@@ -23,7 +23,9 @@ import time
 from subprocess import *
 from time import sleep, strftime
 from datetime import datetime
-
+import os
+# Refresh Button Pin
+refresh_pin = 6
  
 # Define GPIO to LCD mapping
 LCD_RS = 27
@@ -57,36 +59,41 @@ def main():
   GPIO.setup(LCD_D6, GPIO.OUT) # DB6
   GPIO.setup(LCD_D7, GPIO.OUT) # DB7
   GPIO.setup(LCD_BACKLIGHT, GPIO.OUT) # Backlight
- 
+  GPIO.setup(refresh_pin, GPIO.IN, GPIO.PUD_UP) # Sets up internal pull up for refresh button 
+
   # Initialise display
   lcd_init()
   Get_IP()
+
+  while True:
+    button_state = GPIO.input(refresh_pin)
+
+    if button_state == GPIO.LOW:
+      os.system("sudo shutdown -h now")
+      lcd_string("   Refreshing",LCD_LINE_1)
+      lcd_string("    FUCK OFF", LCD_LINE_2)
+      time.sleep(2)
+      Get_IP()
+      time.sleep(0.5)
  
 def Get_IP():
-  lcd_string("Connecting",LCD_LINE_1)
-  time.sleep(3)
+  lcd_string("                ",LCD_LINE_1)
+  lcd_string("                ",LCD_LINE_2)
+  time.sleep(0.5)
   cmd = "ip addr show scope global wlan0 | grep inet | cut -d' ' -f6 | cut -d/ -f1"
   output = ""
-  retry = 0
-  print ("2" + output)
-  print("3" + output)
   p = Popen(cmd, shell=True, stdout=PIPE)
   output = p.communicate()[0] 
-  print ("4: " + output)
   if output == "":  
-    output = DISCONNECTED
+    output = "DISCONNECTED"
   
-
-  
-  print ("5: " + output)
   OUTPUT = str(output)
  
   ## Send The IP Address
-  print ("6: " + OUTPUT)
   if OUTPUT == "DISCONNECTED":
     lcd_string(OUTPUT,LCD_LINE_1)
   else:
-    lcd_string("CONNECTED",LCD_LINE_1)
+    lcd_string("   CONNECTED:",LCD_LINE_1)
     lcd_string(OUTPUT,LCD_LINE_2)
   
     
