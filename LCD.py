@@ -65,16 +65,6 @@ def main():
   lcd_init()
   Get_IP()
 
-  while True:
-    button_state = GPIO.input(refresh_pin)
-
-    if button_state == GPIO.LOW:
-      os.system("sudo shutdown -h now")
-      lcd_string("   Refreshing",LCD_LINE_1)
-      lcd_string("    FUCK OFF", LCD_LINE_2)
-      time.sleep(2)
-      Get_IP()
-      time.sleep(0.5)
  
 def Get_IP():
   lcd_string("                ",LCD_LINE_1)
