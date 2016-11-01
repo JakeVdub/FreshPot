@@ -41,8 +41,8 @@ class FreshPotStreamer(TwythonStreamer):
     GPIO.output(power_pin, False) ## Turns coffee maker off
     app.update_status(status = tweet_text) ##sets text for tweet
     print "Tweeted Back At Ya!"
-    time.sleep(300) ## Prevents it from being ran again for 5 minutes
-    
+    time.sleep(60) ## Prevents it from being ran again for a minute
+    os.system("sudo shutdown -h now") ## Shuts down the pi
 
 
 
