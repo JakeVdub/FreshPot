@@ -46,7 +46,6 @@ class FreshPotStreamer(TwythonStreamer):
 
 
 
-
 ## Create Streamer, calls class FreshPotStreamer, also calls LCD.main()
 try:
   LCD.main() ##Print IP on LCD
